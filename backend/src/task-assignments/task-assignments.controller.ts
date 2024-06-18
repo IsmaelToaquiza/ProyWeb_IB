@@ -1,11 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { TaskAssignmentsService } from './task-assignments.service';
 import { CreateTaskAssignmentDto } from './dto/create-task-assignment.dto';
 import { UpdateTaskAssignmentDto } from './dto/update-task-assignment.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('task-assignments')
+@UseGuards(JwtAuthGuard)
 @Controller('task-assignments')
 export class TaskAssignmentsController {
-  constructor(private readonly taskAssignmentsService: TaskAssignmentsService) {}
+  constructor(
+    private readonly taskAssignmentsService: TaskAssignmentsService,
+  ) {}
 
   @Post()
   create(@Body() createTaskAssignmentDto: CreateTaskAssignmentDto) {
@@ -23,7 +38,10 @@ export class TaskAssignmentsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskAssignmentDto: UpdateTaskAssignmentDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateTaskAssignmentDto: UpdateTaskAssignmentDto,
+  ) {
     return this.taskAssignmentsService.update(+id, updateTaskAssignmentDto);
   }
 
