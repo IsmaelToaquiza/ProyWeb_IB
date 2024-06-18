@@ -1,6 +1,7 @@
 # Backend (NestJS)
 
 # compiled output
+/backend-v1
 /backend/dist
 /backend/build
 
