@@ -36,7 +36,8 @@ const Register = () => {
     // }
 
     // Por ahora, redirigimos al login después del registro
-    router.push("/");
+    console.log(JSON.stringify({ firstName, lastName, email, password }));
+    // router.push("/");
   };
 
   return (
