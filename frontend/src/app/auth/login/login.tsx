@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { login } from "../../../services/authService";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,22 +12,13 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí deberías implementar la lógica de autenticación
-    // Esto puede incluir una llamada a una API de autenticación
-    // Ejemplo:
-    // const response = await fetch('/api/auth/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ email, password }),
-    // });
-    // if (response.ok) {
-    //   router.push('/dashboard');
-    // }
-
-    // Por ahora, redirigimos al dashboard al hacer login
-    router.push("/dashboard");
+    try {
+      await login(email, password);
+      router.push("/dashboard");
+    } catch (error) {
+      console.error(error);
+      alert(`Error en el inicio de sesión`);
+    }
   };
 
   return (

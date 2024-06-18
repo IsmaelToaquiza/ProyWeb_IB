@@ -3,29 +3,22 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { sendResetPasswordEmail } from "@/services/authService";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí deberías implementar la lógica para enviar el correo de recuperación de contraseña
-    // Esto puede incluir una llamada a una API
-    // Ejemplo:
-    // const response = await fetch('/api/auth/forgot-password', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ email }),
-    // });
-    // if (response.ok) {
-    //   // Mostrar un mensaje de éxito o redirigir al usuario
-    // }
-
-    // Por ahora, redirigimos al login después de enviar el correo
-    router.push("/auth/login");
+    try {
+      await sendResetPasswordEmail(email);
+      alert(
+        "Se ha enviado un enlace para restablecer la contraseña a tu correo electrónico"
+      );
+    } catch (error) {
+      console.error(error);
+      alert("Error al enviar el correo de restablecimiento de contraseña");
+    }
   };
 
   return (

@@ -3,13 +3,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { register } from "../../../services/authService";
 
 const Register = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -19,25 +20,13 @@ const Register = () => {
       return;
     }
 
-    console.log({ firstName, lastName, email, password, confirmPassword });
-
-    // Aquí deberías implementar la lógica de registro
-    // Esto puede incluir una llamada a una API de registro
-    // Ejemplo:
-    // const response = await fetch('/api/auth/register', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ firstName, lastName, email, password }),
-    // });
-    // if (response.ok) {
-    //   router.push('/auth/login');
-    // }
-
-    // Por ahora, redirigimos al login después del registro
-    console.log(JSON.stringify({ firstName, lastName, email, password }));
-    // router.push("/");
+    try {
+      await register(email, password, firstName, lastName);
+      router.push("/auth/login");
+    } catch (error) {
+      console.error(error);
+      alert("Error en el registro");
+    }
   };
 
   return (

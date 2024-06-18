@@ -26,6 +26,12 @@ export class AuthService {
     const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
+      user: {
+        id: user.id,
+        email: user.email,
+        first_name: user.first_name,
+        last_name: user.last_name,
+      },
     };
   }
 
@@ -54,7 +60,7 @@ export class AuthService {
       { email: user.email, sub: user.id },
       { expiresIn: '1h' },
     );
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+    const resetUrl = `${process.env.FRONTEND_URL}/auth/reset-password?token=${token}`;
     const mailText = `Please click the following link to reset your password: ${resetUrl}`;
 
     await this.mailerService.sendMail(email, 'Password Reset', mailText);

@@ -1,5 +1,16 @@
-import Login from "./auth/login/login";
+"use client";
 
-export default function Home() {
-  return <Login />;
-}
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+const HomePage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/auth/login");
+  }, [router]);
+
+  return <div></div>;
+};
+
+export default HomePage;
