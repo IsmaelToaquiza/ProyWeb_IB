@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -12,29 +13,32 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.usersRepository.create(createUserDto);
-    return await this.usersRepository.save(user);
-  }
-
   async findAll(): Promise<User[]> {
-    return await this.usersRepository.find();
+    return this.usersRepository.find();
   }
 
-  async findOne(id: number): Promise<User> {
-    return await this.usersRepository.findOne({
-      where: { id: id },
+  async findOne(emailOrId: string | number): Promise<User | undefined> {
+    if (typeof emailOrId === 'string') {
+      return this.usersRepository.findOne({ where: { email: emailOrId } });
+    }
+    return this.usersRepository.findOne({ where: { id: emailOrId } });
+  }
+
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const newUser = this.usersRepository.create({
+      ...createUserDto,
+      password: hashedPassword,
     });
+    return this.usersRepository.save(newUser);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.findOne(id);
-    if (!user) {
-      return null;
+    if (updateUserDto.password) {
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
     }
-
-    const updatedUser = { ...user, ...updateUserDto };
-    return await this.usersRepository.save(updatedUser);
+    await this.usersRepository.update(id, updateUserDto);
+    return this.usersRepository.findOne({ where: { id: id } });
   }
 
   async remove(id: number): Promise<void> {

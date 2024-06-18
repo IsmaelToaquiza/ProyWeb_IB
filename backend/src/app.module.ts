@@ -3,8 +3,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { ProjectsModule } from './projects/projects.module';
+import { TasksModule } from './tasks/tasks.module';
+import { TaskAssignmentsModule } from './task-assignments/task-assignments.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { UsersModule } from './users/users.module';
         const password = configService.get<string>('DB_PASSWORD');
         const database = configService.get<string>('DB_NAME');
 
+        // console.log('host', host);
+        // console.log('port', port);
         return {
           type: 'postgres',
           host,
@@ -34,8 +38,10 @@ import { UsersModule } from './users/users.module';
       },
       inject: [ConfigService],
     }),
-    AuthModule,
     UsersModule,
+    ProjectsModule,
+    TasksModule,
+    TaskAssignmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
