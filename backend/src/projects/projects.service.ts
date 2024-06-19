@@ -52,4 +52,35 @@ export class ProjectsService {
   async remove(id: number): Promise<void> {
     await this.projectsRepository.delete(id);
   }
+  async findRecentProjects(userId: number): Promise<Project[]> {
+    const user = await this.usersRepository.findOne({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return this.projectsRepository.find({
+      where: { created_by: { id: user.id } },
+      order: { created_at: 'DESC' },
+      take: 2,
+    });
+  }
+
+  // Metodo para buscar los proyectos de un usuario
+  async findUserProjects(userId: number): Promise<Project[]> {
+    const user = await this.usersRepository.findOne({
+      where: { id: userId },
+      order: { created_at: 'DESC' },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return this.projectsRepository.find({
+      where: { created_by: { id: user.id } },
+    });
+  }
 }

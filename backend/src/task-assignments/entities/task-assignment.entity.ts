@@ -27,7 +27,4 @@ export class TaskAssignment {
 
   @CreateDateColumn()
   assigned_at: Date;
-
-  @Column()
-  status: string;
 }

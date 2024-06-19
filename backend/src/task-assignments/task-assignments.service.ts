@@ -57,11 +57,36 @@ export class TaskAssignmentsService {
   }
 
   async update(
-    id: number,
+    idtask: number,
     updateTaskAssignmentDto: UpdateTaskAssignmentDto,
   ): Promise<TaskAssignment> {
-    await this.taskAssignmentsRepository.update(id, updateTaskAssignmentDto);
-    return this.taskAssignmentsRepository.findOne({ where: { id: id } });
+    const taskAssignment = await this.taskAssignmentsRepository.findOne({
+      where: { task_id: { id: idtask } },
+    });
+
+    console.log(taskAssignment);
+
+    if (!taskAssignment) {
+      // Si no se encuentra la asignación de tarea, crear una nueva
+      return this.create({
+        task_id: idtask,
+        user_id: updateTaskAssignmentDto.user_id,
+      });
+    }
+
+    const user = await this.usersRepository.findOne({
+      where: { id: updateTaskAssignmentDto.user_id },
+    });
+
+    // Actualiza la asignación de tarea encontrada
+    await this.taskAssignmentsRepository.update(taskAssignment.id, {
+      user_id: user,
+    });
+
+    // Devuelve la asignación de tarea actualizada
+    return this.taskAssignmentsRepository.findOne({
+      where: { id: taskAssignment.id },
+    });
   }
 
   async remove(id: number): Promise<void> {

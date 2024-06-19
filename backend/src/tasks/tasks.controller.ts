@@ -43,4 +43,19 @@ export class TasksController {
   remove(@Param('id') id: string) {
     return this.tasksService.remove(+id);
   }
+
+  @Get('/project/:projectId')
+  findByProjectId(@Param('projectId') projectId: number) {
+    return this.tasksService.findByProjectId(projectId);
+  }
+
+  @Get('gettask/:id')
+  getTaskById(@Param('id') id: string) {
+    return this.tasksService.findById(+id);
+  }
+
+  @Get('user/:userId')
+  findByUserId(@Param('userId') userId: string) {
+    return this.tasksService.findByUserId(+userId);
+  }
 }

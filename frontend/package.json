@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "next": "14.2.4",
     "react": "^18",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

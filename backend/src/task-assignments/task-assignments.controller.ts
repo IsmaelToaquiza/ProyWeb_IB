@@ -37,12 +37,12 @@ export class TaskAssignmentsController {
     return this.taskAssignmentsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch(':idtask')
   update(
-    @Param('id') id: string,
+    @Param('idtask') idtask: string,
     @Body() updateTaskAssignmentDto: UpdateTaskAssignmentDto,
   ) {
-    return this.taskAssignmentsService.update(+id, updateTaskAssignmentDto);
+    return this.taskAssignmentsService.update(+idtask, updateTaskAssignmentDto);
   }
 
   @Delete(':id')

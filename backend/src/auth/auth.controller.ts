@@ -2,11 +2,11 @@ import {
   Controller,
   Post,
   Body,
-  UseGuards,
   Request,
-  Param,
   Query,
   UnauthorizedException,
+  Headers,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -60,5 +60,15 @@ export class AuthController {
   ) {
     await this.authService.resetPassword(token, resetPasswordDto.password);
     return { message: 'Password has been reset' };
+  }
+
+  @Get('validate-token')
+  async validateToken(@Headers('authorization') authorization: string) {
+    const token = authorization?.split(' ')[1];
+    if (!token) {
+      return { valid: false };
+    }
+    const isValid = await this.authService.validateToken(token);
+    return { valid: isValid };
   }
 }

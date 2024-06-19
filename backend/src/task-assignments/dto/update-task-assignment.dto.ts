@@ -1,8 +1,8 @@
-import { IsOptional, IsString, Length } from 'class-validator';
+import { IsNumber, IsNotEmpty } from 'class-validator';
+import { User } from 'src/users/entities/user.entity';
 
 export class UpdateTaskAssignmentDto {
-  @IsString()
-  @Length(1, 50, { message: 'El estado debe tener entre 1 y 50 caracteres.' })
-  @IsOptional()
-  status?: string;
+  @IsNumber({}, { message: 'El ID del usuario debe ser un número.' })
+  @IsNotEmpty({ message: 'El ID del usuario no puede estar vacío.' })
+  user_id: number;
 }

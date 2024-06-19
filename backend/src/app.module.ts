@@ -23,9 +23,6 @@ import { AuthModule } from './auth/auth.module';
         const username = configService.get<string>('DB_USERNAME');
         const password = configService.get<string>('DB_PASSWORD');
         const database = configService.get<string>('DB_NAME');
-
-        // console.log('host', host);
-        // console.log('port', port);
         return {
           type: 'postgres',
           host,

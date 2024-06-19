@@ -6,9 +6,15 @@ import { TasksService } from './tasks.service';
 import { TasksController } from './tasks.controller';
 import { ProjectsModule } from 'src/projects/projects.module';
 import { UsersModule } from 'src/users/users.module';
+import { TaskAssignmentsModule } from 'src/task-assignments/task-assignments.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Task]), ProjectsModule, UsersModule],
+  imports: [
+    TypeOrmModule.forFeature([Task]),
+    ProjectsModule,
+    UsersModule,
+    TaskAssignmentsModule,
+  ],
   providers: [TasksService],
   controllers: [TasksController],
   exports: [TypeOrmModule],

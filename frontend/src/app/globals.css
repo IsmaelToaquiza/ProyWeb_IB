@@ -21399,7 +21399,7 @@ body {
   transition: transform 0.15s ease;
 }
 .sidenav .sidenav-menu .nav .nav-link.collapsed .sidenav-collapse-arrow {
-  transform: rotate(-90deg);
+  transform: rotate(-180deg);
 }
 .sidenav .sidenav-menu .nav .nav-link .badge {
   padding: 0.125rem 0.25rem;

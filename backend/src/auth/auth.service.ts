@@ -79,4 +79,13 @@ export class AuthService {
       throw new Error('Invalid or expired token');
     }
   }
+
+  async validateToken(token: string): Promise<boolean> {
+    try {
+      const decoded = this.jwtService.verify(token);
+      return !!decoded;
+    } catch (error) {
+      return false;
+    }
+  }
 }
