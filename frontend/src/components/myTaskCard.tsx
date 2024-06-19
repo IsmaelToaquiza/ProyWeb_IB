@@ -40,9 +40,6 @@ const MyTaskCard: React.FC<MyTaskCardProps> = ({ task, goEditTask }) => {
         <p className="card-text">
           <small className="text-muted">Proyecto: {task.project!.name}</small>
         </p>
-        {/* <button className="btn btn-primary" onClick={() => goEditTask(task.id)}>
-          <i className="bi bi-pencil me-2"></i>Editar
-        </button> */}
       </div>
     </div>
   );
