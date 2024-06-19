@@ -18,6 +18,7 @@ const Sidebar: React.FC = () => {
 
   const isProjectsPath = pathname.startsWith("/dashboard/projects");
   const isTasksPath = pathname.startsWith("/dashboard/tasks");
+  const isChatPath = pathname.startsWith("/dashboard/chat");
 
   return (
     <div id="layoutSidenav_nav">
@@ -96,9 +97,18 @@ const Sidebar: React.FC = () => {
                 </Link>
               </nav>
             </div>
+
+            <Link
+              href="/dashboard/chat"
+              className={`nav-link ${isChatPath ? "active" : ""}`}>
+              <div className="nav-link-icon">
+                <i className="bi bi-chat-dots fs-5"></i>
+              </div>
+              Chat
+            </Link>
           </div>
         </div>
-        {/* Sidenav Footer*/}
+        {/* Sidenav Footer */}
         <div className="sidenav-footer">
           <div className="sidenav-footer-content">
             <div className="sidenav-footer-subtitle">Inicio Sesión como:</div>
